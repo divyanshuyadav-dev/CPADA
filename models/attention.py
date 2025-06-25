@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import math
 
-import pandas as pd
 class SpatialAttention(nn.Module):
     def __init__(self, num_groups=16):
         super().__init__()
