@@ -71,11 +71,11 @@ class Darknet53(nn.Module):
 
         x, F, Z = self.block1(x); attn_data["F"] += F; attn_data["Z"] += Z
         x, F, Z = self.block2(x); attn_data["F"] += F; attn_data["Z"] += Z
-        x, F, Z = self.block3(x); attn_data["F"] += F; attn_data["Z"] += Z
-        x, F, Z = self.block4(x); attn_data["F"] += F; attn_data["Z"] += Z
-        x, F, Z = self.block5(x); attn_data["F"] += F; attn_data["Z"] += Z
+        C3, F, Z = self.block3(x); attn_data["F"] += F; attn_data["Z"] += Z
+        C4, F, Z = self.block4(C3); attn_data["F"] += F; attn_data["Z"] += Z
+        C5, F, Z = self.block5(C4); attn_data["F"] += F; attn_data["Z"] += Z
 
-        return x, attn_data
+        return [C3, C4, C5], attn_data
     
 if __name__ == "__main__":
     model = Darknet53()
