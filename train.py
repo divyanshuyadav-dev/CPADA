@@ -33,6 +33,7 @@ def train_model(
         annotation_path="datasets/pigface/train/annotations/train.json",
         img_size=img_size
     )
+    num_classes = train_dataset.class_count
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
 
     print(f"[INFO] Loaded {len(train_dataset)} training samples")
@@ -59,6 +60,7 @@ def train_model(
             # === Loss computation ===
             loss = cpada_loss(
                 preds, targets, attn_data, anchors,
+                # num_classes=num_classes,
                 beta1=1.0, beta2=1.0, lambda1=1.0, lambda2=1.0,
                 t1=1.0, t2=1.0
             )

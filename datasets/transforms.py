@@ -12,6 +12,8 @@ class PigFaceDataset(Dataset):
         self.max_boxes = max_boxes
         self.transform = transform
 
+
+
         # Load COCO-style annotations
         with open(annotation_path) as f:
             data = json.load(f)
@@ -27,6 +29,16 @@ class PigFaceDataset(Dataset):
             self.image_id_to_anns.setdefault(img_id, []).append(ann)
 
         self.id_to_filename = {img['id']: img['file_name'] for img in self.images}
+        # Map original category_id → index (e.g. 0, 1, 2, ...)
+        self.cat_id_to_index = {
+            cat['id']: idx for idx, cat in enumerate(self.categories)
+        }
+        self.num_classes = len(self.categories)
+    
+    @property
+    def class_count(self):
+        return self.num_classes
+
 
     def __len__(self):
         return len(self.images)
@@ -60,7 +72,9 @@ class PigFaceDataset(Dataset):
             cy = (y + h / 2) / image_info['height']
             norm_w = w / image_info['width']
             norm_h = h / image_info['height']
-            class_id = ann['category_id']
+
+            #oneclass
+            class_id = 0
             target[i] = torch.tensor([cx, cy, norm_w, norm_h, class_id])
 
         return image, target
