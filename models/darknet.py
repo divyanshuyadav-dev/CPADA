@@ -28,11 +28,11 @@ class ResidualBlock(nn.Module):
         x = self.conv2(x)
 
         # TODO:recheck the usage of F_i over m_i
-        x, F_i = self.spatial_att(x) # the F_i is intended to use in AGDL loss
-        x, Z = self.channel_att(x) # Z is used in pruning
+        x_z, F_i = self.spatial_att(x) # the F_i is intended to use in AGDL loss
+        z, cav = self.channel_att(x_z) # Z is used in pruning
 
-        out = residual + x
-        return out, F_i, Z
+        out = residual + z
+        return out, F_i, cav
     
 class DarknetBlock(nn.Module):
     def __init__(self, in_channels, num_residuals):
