@@ -26,6 +26,7 @@ class SpatialAttention(nn.Module):
 
         m_i = Q_i * F_i  # Element-wise spatial attention
         X_z = m_i.view(B, C, H, W)
+        # TODO: check whether F_i is correct or m_i
         return X_z, F_i.view(B, self.num_groups, H, W)  # return attention for AGDL
     
 

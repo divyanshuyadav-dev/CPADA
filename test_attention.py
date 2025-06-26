@@ -1,6 +1,5 @@
 import torch
-from CPADA import SpatialAttention, ChannelAttention 
-# from models.attention import SpatialAttention, ChannelAttention
+from models.attention import SpatialAttention, ChannelAttention
 
 def test_spatial_attention():
     B, C, H, W = 2, 64, 32, 32
